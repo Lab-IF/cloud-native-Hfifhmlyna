@@ -1,167 +1,45 @@
-# 🐳 Pertemuan 1: Pengenalan Docker
+# 📝 Laporan Praktikum - Pertemuan 1
 
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Level](https://img.shields.io/badge/Level-Beginner-green?style=for-the-badge)
-![Duration](https://img.shields.io/badge/Durasi-90%20menit-blue?style=for-the-badge)
+## 🐳 Implementasi Docker Web Server (Nginx)
 
----
-
-## 🎯 Tujuan Pembelajaran
-
-| No | Tujuan | Status |
-|----|--------|--------|
-| 1 | Memahami apa itu Docker dan manfaatnya | ⬜ |
-| 2 | Menginstall Docker di komputer | ⬜ |
-| 3 | Menjalankan container pertama | ⬜ |
+### 👤 Identitas
+- **Nama:** Hafifa Mulyana
+- **NIM:** 105841104123
+- **Kelas:** 5B
 
 ---
 
-## 📚 Materi
+### 🛠️ Penjelasan Tugas
+Pada praktikum pertama ini, saya mempelajari dasar-dasar Docker dengan melakukan deploy sebuah web server statis menggunakan **Nginx**. Tugas ini mencakup pembuatan file HTML sederhana dan membungkusnya ke dalam Docker Container.
 
-### 🤔 Apa itu Docker?
-
-> **Docker** adalah platform open-source untuk membuat, menjalankan, dan mengelola **container** - paket ringan yang berisi aplikasi beserta semua dependensinya.
-
-```
-┌─────────────────────────────────────────────┐
-│            Tanpa Docker                     │
-│  ┌─────┐ ┌─────┐ ┌─────┐                   │
-│  │App A│ │App B│ │App C│  ← Konflik!       │
-│  └──┬──┘ └──┬──┘ └──┬──┘                   │
-│     └───────┴───────┘                       │
-│         OS (shared)                         │
-└─────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│            Dengan Docker                    │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐       │
-│  │Container│ │Container│ │Container│       │
-│  │  App A  │ │  App B  │ │  App C  │       │
-│  │  +deps  │ │  +deps  │ │  +deps  │       │
-│  └─────────┘ └─────────┘ └─────────┘       │
-│              Docker Engine                  │
-│                  OS                         │
-└─────────────────────────────────────────────┘
-```
-
-#### 💡 Manfaat Docker:
-- ✅ **Konsisten** - Berjalan sama di mana saja
-- ✅ **Isolasi** - Aplikasi tidak saling mengganggu  
-- ✅ **Portabel** - Mudah dipindahkan
-- ✅ **Efisien** - Lebih ringan dari VM
+### 📁 Struktur File
+- `index.html` : Berisi data diri/biodata singkat.
+- `Dockerfile` : Instruksi untuk membangun image berbasis Nginx.
+- `img/` : Folder berisi bukti screenshot hasil praktikum.
 
 ---
 
-### 🔧 Instalasi Docker
+### 🖼️ Screenshot Hasil
 
-<details>
-<summary>📦 <b>Ubuntu/Debian</b> (Klik untuk expand)</summary>
+#### 1. Tampilan Web Biodata (Localhost)
+![Biodata](img/ss-nginx.png)
+*Keterangan: Hasil running container Nginx yang menampilkan file index.html pada port 80/8080.*
 
-```bash
-# Update package
-sudo apt update
-
-# Install Docker
-sudo apt install docker.io -y
-
-# Start & enable service
-sudo systemctl start docker
-sudo systemctl enable docker
-
-# Tambahkan user ke group docker (agar tidak perlu sudo)
-sudo usermod -aG docker $USER
-```
-
-</details>
-
-<details>
-<summary>🪟 <b>Windows</b> (Klik untuk expand)</summary>
-
-1. Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
-2. Jalankan installer
-3. Restart komputer
-4. Buka Docker Desktop
-
-</details>
+#### 2. Status Docker Desktop
+![Docker Status](img/ss-docker-desktop.png)
+*Keterangan: Menunjukkan bahwa container untuk pertemuan 1 sedang berjalan (running) di Docker Desktop.*
 
 ---
 
-### ⌨️ Perintah Dasar
-
-| Perintah | Fungsi | Contoh |
-|----------|--------|--------|
-| `docker --version` | Cek versi Docker | `Docker version 24.0.5` |
-| `docker run` | Jalankan container | `docker run hello-world` |
-| `docker ps` | Lihat container aktif | - |
-| `docker ps -a` | Lihat semua container | - |
-| `docker images` | Lihat daftar images | - |
-
-```bash
-# 🚀 Cek instalasi berhasil
-docker --version
-
-# 🎉 Jalankan container pertama!
-docker run hello-world
-
-# 👀 Lihat container yang berjalan
-docker ps
-
-# 📋 Lihat semua container (termasuk yang sudah stop)
-docker ps -a
-
-# 🖼️ Lihat images yang sudah didownload
-docker images
-```
-
-> ⚠️ **Catatan:** Jika muncul error "permission denied", jalankan dengan `sudo` atau logout lalu login kembali setelah menambahkan user ke group docker.
+### 📑 Langkah Kerja
+1. Membuat file `index.html`.
+2. Membuat `Dockerfile` dengan instruksi `FROM nginx:alpine`.
+3. Melakukan build image dengan perintah: 
+   `docker build -t biodata-hafifa .`
+4. Menjalankan container dengan perintah: 
+   `docker run -d -p 8080:80 --name web-biodata-hafifa biodata-hafifa`
 
 ---
 
-## ✏️ Tugas Praktikum
-
-### 📝 Tugas 1: Instalasi & Hello World
-
-**Instruksi:**
-1. [ ] Install Docker di komputer masing-masing
-2. [ ] Jalankan perintah `docker run hello-world`
-3. [ ] Screenshot output yang muncul
-4. [ ] Jalankan `docker images` dan screenshot hasilnya
-
----
-
-## 📤 Pengumpulan Tugas
-
-### 📁 Struktur Folder
-```
-pertemuan-01/
-├── 📄 README.md          # Materi (file ini)
-├── 📄 LAPORAN.md         # ⬅️ ISI LAPORAN DI SINI!
-└── 📁 ss/                # ⬅️ SIMPAN SCREENSHOT DI SINI!
-    ├── 01-docker-version.png
-    ├── 02-hello-world.png
-    ├── 03-docker-images.png
-    └── 04-docker-ps.png
-```
-
-### 📝 Cara Mengerjakan:
-1. **Screenshot** → Simpan di folder `ss/`
-2. **Laporan** → Edit file `LAPORAN.md`
-3. Isi semua bagian yang diminta
-
-> 📋 **Template Laporan:** [Klik di sini untuk mengisi LAPORAN.md](LAPORAN.md)
-
----
-
-## 📖 Referensi
-
-- 🔗 [Docker Official Documentation](https://docs.docker.com/)
-- 🔗 [Docker Hub](https://hub.docker.com/)
-- 🎥 [Docker in 100 Seconds](https://www.youtube.com/watch?v=Gjnup-PuquQ)
-
----
-
-<div align="center">
-
-**📅 Pertemuan 1 dari 8** | [➡️ Pertemuan 2: Docker Images](../pertemuan-02/README.md)
-
-</div>
+### 💡 Kesimpulan
+Dengan Docker, kita dapat menjalankan web server dengan sangat cepat tanpa harus menginstall Nginx secara manual di sistem operasi utama. Hal ini memastikan aplikasi berjalan sama di setiap komputer.
