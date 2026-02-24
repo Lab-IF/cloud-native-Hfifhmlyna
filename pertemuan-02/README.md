@@ -17,7 +17,6 @@ Pada pertemuan ini, saya membangun aplikasi web menggunakan **Flask** yang mendu
 2. `GET /hello/<nama>` : Endpoint dinamis yang akan menyapa user berdasarkan nama yang diketikkan di URL.
 
 ---
-
 ### 🖼️ Screenshot Hasil
 
 #### 1. Endpoint Greeting (/hello/Hafifa)
