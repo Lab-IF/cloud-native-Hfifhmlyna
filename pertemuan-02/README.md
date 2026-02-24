@@ -1,185 +1,44 @@
-# 📦 Pertemuan 2: Docker Images & Dockerfile
+# 📝 Laporan Praktikum - Pertemuan 2
 
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Level](https://img.shields.io/badge/Level-Beginner-green?style=for-the-badge)
+## 🐍 Web Service Dinamis dengan Python Flask & Docker
 
----
-
-## 🎯 Tujuan Pembelajaran
-
-| No | Tujuan | Status |
-|----|--------|--------|
-| 1 | Memahami perbedaan Image dan Container | ⬜ |
-| 2 | Membuat Dockerfile sederhana | ⬜ |
-| 3 | Build custom Docker image | ⬜ |
+### 👤 Identitas
+- **Nama:** Hafifa Mulyana
+- **NIM:** 105841104123
+- **Kelas:** 5B
 
 ---
 
-## 📚 Materi
+### 🛠️ Penjelasan Tugas
+Pada pertemuan ini, saya membangun aplikasi web menggunakan **Flask** yang mendukung **Dynamic Routing**. Berbeda dengan Pertemuan 1 yang bersifat statis, aplikasi ini dapat memproses input dari URL dan menampilkannya kembali ke layar.
 
-### 🖼️ Docker Image vs Container
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                                                              │
-│   📄 IMAGE (Template)          📦 CONTAINER (Instance)       │
-│   ─────────────────           ──────────────────────────     │
-│   • Read-only                 • Bisa dimodifikasi            │
-│   • Blueprint/resep           • Aplikasi berjalan            │
-│   • Bisa dibagikan            • Dibuat dari image            │
-│                                                              │
-│   ┌─────────────┐             ┌─────────────┐                │
-│   │   IMAGE     │ ──────────► │ CONTAINER 1 │                │
-│   │  nginx:1.0  │    docker   ├─────────────┤                │
-│   └─────────────┘     run     │ CONTAINER 2 │                │
-│                               ├─────────────┤                │
-│         1 Image       ──►     │ CONTAINER 3 │                │
-│                               └─────────────┘                │
-│                                 N Containers                 │
-└──────────────────────────────────────────────────────────────┘
-```
-
-> 💡 **Analogi:** Image = Resep Kue 📝 | Container = Kue yang sudah jadi 🎂
+### 🎯 Endpoint yang Dibuat
+1. `GET /` : Halaman utama yang berisi instruksi penggunaan aplikasi.
+2. `GET /hello/<nama>` : Endpoint dinamis yang akan menyapa user berdasarkan nama yang diketikkan di URL.
 
 ---
 
-### 📝 Dockerfile
+### 🖼️ Screenshot Hasil
 
-Dockerfile adalah file teks berisi **instruksi langkah-langkah** untuk membuat Docker Image.
+#### 1. Endpoint Greeting (/hello/Hafifa)
+![Hasil Greeting](img/ss-greeting.png)
+*Keterangan: Berhasil menampilkan output "Halo, Hafifa!" saat mengakses endpoint /hello/Hafifa.*
 
-#### Instruksi Dasar:
-
-| Instruksi | Fungsi | Contoh |
-|-----------|--------|--------|
-| `FROM` | Base image | `FROM python:3.11` |
-| `WORKDIR` | Set working directory | `WORKDIR /app` |
-| `COPY` | Copy file dari host | `COPY . /app` |
-| `RUN` | Jalankan command saat build | `RUN pip install flask` |
-| `CMD` | Command default saat run | `CMD ["python", "app.py"]` |
-| `EXPOSE` | Dokumentasi port | `EXPOSE 5000` |
-
-#### 📄 Contoh Dockerfile:
-
-```dockerfile
-# 🐍 Base image Python
-FROM python:3.11-slim
-
-# 📁 Set working directory
-WORKDIR /app
-
-# 📋 Copy file aplikasi
-COPY app.py .
-
-# 🚀 Command untuk menjalankan aplikasi
-CMD ["python", "app.py"]
-```
+#### 2. Log Container Docker
+![Docker Log](img/ss-docker-log.png)
+*Keterangan: Status container tugas2-flask berjalan normal pada port 5000.*
 
 ---
 
-### ⌨️ Perintah Build & Run
-
-```bash
-# 🔨 Build image dari Dockerfile
-docker build -t nama-image:tag .
-
-# Penjelasan:
-#   -t          = tag/nama untuk image
-#   nama:tag    = format nama image
-#   .           = lokasi Dockerfile (current dir)
-
-# 🚀 Jalankan container dari image
-docker run nama-image:tag
-
-# 🗑️ Hapus image
-docker rmi nama-image:tag
-```
+### 📑 Langkah Kerja
+1. **Coding**: Membuat `app.py` menggunakan framework Flask dengan logika f-string untuk greeting.
+2. **Environment**: Membuat `requirements.txt` untuk dependensi Flask.
+3. **Containerization**: Membuat `Dockerfile` menggunakan base image `python:3.9-slim`.
+4. **Execution**: 
+   - `docker build -t flask-hafifa .`
+   - `docker run -d -p 5000:5000 --name tugas2-flask flask-hafifa`
 
 ---
 
-## 🧪 Praktikum
-
-### Step 1: Buat Folder Project
-```bash
-mkdir docker-python
-cd docker-python
-```
-
-### Step 2: Buat File `app.py`
-```python
-# app.py
-print("=" * 40)
-print("🐳 Hello from Docker!")
-print("Nama  : [Ganti dengan nama Anda]")
-print("NIM   : [Ganti dengan NIM Anda]")
-print("=" * 40)
-```
-
-### Step 3: Buat File `Dockerfile`
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY app.py .
-CMD ["python", "app.py"]
-```
-
-### Step 4: Build & Run
-```bash
-# Build
-docker build -t biodata-app:1.0 .
-
-# Run
-docker run biodata-app:1.0
-```
-
----
-
-## ✏️ Tugas Praktikum
-
-### 📝 Tugas: Aplikasi Biodata
-
-| Kriteria | Poin |
-|----------|------|
-| Aplikasi menampilkan Nama, NIM, Kelas | 40 |
-| Dockerfile benar | 30 |
-| Build berhasil | 20 |
-| Screenshot lengkap | 10 |
-| **Total** | **100** |
-
----
-
-## 📤 Pengumpulan Tugas
-
-### 📁 Struktur Folder
-```
-pertemuan-02/
-├── 📄 README.md          # Materi (file ini)
-├── 📄 LAPORAN.md         # ⬅️ ISI LAPORAN DI SINI!
-└── 📁 ss/                # ⬅️ SIMPAN SCREENSHOT DI SINI!
-    ├── 01-struktur-folder.png
-    ├── 02-docker-build.png
-    ├── 03-docker-images.png
-    └── 04-docker-run.png
-```
-
-### 📝 Cara Mengerjakan:
-1. **Screenshot** → Simpan di folder `ss/`
-2. **Laporan** → Edit file `LAPORAN.md`
-3. **Paste kode** `app.py` dan `Dockerfile` di laporan
-
-> 📋 **Template Laporan:** [Klik di sini untuk mengisi LAPORAN.md](LAPORAN.md)
-
----
-
-## 📖 Referensi
-
-- 🔗 [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
-- 🔗 [Best Practices Dockerfile](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-
----
-
-<div align="center">
-
-[⬅️ Pertemuan 1](../pertemuan-01/README.md) | **📅 Pertemuan 2 dari 8** | [➡️ Pertemuan 3](../pertemuan-03/README.md)
-
-</div>
+### 💡 Kesimpulan
+Praktikum ini menunjukkan kemudahan Docker dalam membungkus aplikasi berbasis bahasa pemrograman tertentu (Python). Dynamic routing pada Flask memungkinkan pembuatan aplikasi yang lebih interaktif.
